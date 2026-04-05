@@ -41,7 +41,7 @@ category   = col2.selectbox("Category", CATEGORIES)
 num_colors = col3.slider("Colors", 3, 8, 5)
 
 st.write("")
-_, btn, _ = st.columns([2 , 1 , 2])
+_, btn, _ = st.columns([1, 1, 1])
 if btn.button("Generate Palette →"):
     if not mood.strip():
         st.error("Please enter a mood or theme.")
@@ -66,15 +66,13 @@ if st.session_state.palette:
                 <div class="hex">{color['hex']}</div>
                 <div class="rgb">rgb({r}, {g}, {b})</div>
                 <div class="desc">{color['description']}</div>
+                <button onclick="navigator.clipboard.writeText('{color['hex']}').then(()=>{{
+        this.textContent=' Copied!'; setTimeout(()=>this.textContent='Copy HEX',1500);
+    }})" style="width:100%;background:transparent;border:1px solid rgba(201,168,76,0.35);
+        color:#c9a84c;padding:7px 0;border-radius:6px;font-size:.74rem;cursor:pointer;margin-top:6px;">
+    Copy HEX</button>
             </div>""", unsafe_allow_html=True)
-
-            st.iframe(f"""
-            <button onclick="navigator.clipboard.writeText('{color['hex']}').then(()=>{{
-                this.textContent='✓ Copied!'; setTimeout(()=>this.textContent='Copy HEX',1500);
-            }})" style="width:100%;background:transparent;border:1px solid rgba(201,168,76,0.35);
-                color:#c9a84c;padding:7px 0;border-radius:6px;font-size:.74rem;cursor:pointer;">
-            Copy HEX</button>""", height=36)
-
+    st.write("")
     st.write("")
     _, dl, _ = st.columns([1, 1, 1])
     with dl:
@@ -82,3 +80,5 @@ if st.session_state.palette:
                            create_palette_image(palette),
                            file_name=f"palette_{st.session_state.mood[:20]}.png",
                            mime="image/png", use_container_width=True)
+st.divider()
+st.markdown('<p class="footer">Made with ❤️ by the SpectrumAI team</p>', unsafe_allow_html=True)
