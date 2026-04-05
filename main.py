@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 from color_palette_generator import generate_palette
 from features import create_palette_image
 from PIL import Image
@@ -36,13 +35,13 @@ CATEGORIES = ["Interior Design", "Fashion & Clothing", "Art & Painting",
               "Event & Party", "Nature & Outdoors", "Brand & Logo",
               "Website & UI", "Presentation", "Other"]
 
-col1, col2, col3 = st.columns([2, 2, 1])
+col1, col2, col3 = st.columns([3, 3 , 1])
 mood       = col1.text_input("Mood or theme", placeholder="e.g. Batman, sunset beach…")
 category   = col2.selectbox("Category", CATEGORIES)
 num_colors = col3.slider("Colors", 3, 8, 5)
 
 st.write("")
-_, btn, _ = st.columns([2.5, 1, 2.5])
+_, btn, _ = st.columns([2 , 1 , 2])
 if btn.button("Generate Palette →"):
     if not mood.strip():
         st.error("Please enter a mood or theme.")
@@ -69,7 +68,7 @@ if st.session_state.palette:
                 <div class="desc">{color['description']}</div>
             </div>""", unsafe_allow_html=True)
 
-            components.html(f"""
+            st.iframe(f"""
             <button onclick="navigator.clipboard.writeText('{color['hex']}').then(()=>{{
                 this.textContent='✓ Copied!'; setTimeout(()=>this.textContent='Copy HEX',1500);
             }})" style="width:100%;background:transparent;border:1px solid rgba(201,168,76,0.35);
