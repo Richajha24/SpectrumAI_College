@@ -13,8 +13,6 @@ def to_base64(path):
 
 bg   = to_base64("bg9.png")
 logo = to_base64("logo3.png")
-
-# load CSS and inject background image
 css = open("style.css").read()
 bg_rule = f".stApp {{ background: linear-gradient(rgba(10,8,6,0.78),rgba(10,8,6,0.78)), url('data:image/jpg;base64,{bg}') center/cover fixed; }}"
 st.markdown(f"<style>{css}\n{bg_rule}</style>", unsafe_allow_html=True)
@@ -29,8 +27,6 @@ st.markdown(f"""
 </div>
 <div class="gold-line"></div>
 """, unsafe_allow_html=True)
-
-# session state
 if "palette" not in st.session_state:
     st.session_state.palette = None
 if "mood" not in st.session_state:
@@ -40,7 +36,6 @@ CATEGORIES = ["Interior Design", "Fashion & Clothing", "Art & Painting",
               "Event & Party", "Nature & Outdoors", "Brand & Logo",
               "Website & UI", "Presentation", "Other"]
 
-# inputs
 col1, col2, col3 = st.columns([2, 2, 1])
 mood       = col1.text_input("Mood or theme", placeholder="e.g. Batman, sunset beach…")
 category   = col2.selectbox("Category", CATEGORIES)
@@ -58,8 +53,6 @@ if btn.button("Generate Palette →"):
                 st.session_state.mood = mood.strip()
             except Exception as e:
                 st.error(f"Something went wrong: {e}")
-
-# palette
 if st.session_state.palette:
     palette = st.session_state.palette
     st.markdown(f"<br><p style='font-family:Cormorant Garamond,serif;font-size:1.8rem;margin:0 0 16px'>\"{st.session_state.mood}\"</p>", unsafe_allow_html=True)
